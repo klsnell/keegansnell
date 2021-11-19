@@ -1,7 +1,7 @@
 const {DataTypes} = require("sequelize");
 const db = require("../db");
 
-const service = db.define("service", {
+const Service = db.define("service", {
     serviceType: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -18,17 +18,23 @@ const service = db.define("service", {
         type: DataTypes.STRING,
         allowNull: false
       },
-      owner_id: {
-          type: DataTypes.INTEGER
-      }
+      id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false
+      },
+      userId: {
+        type: DataTypes.UUID,
+        allowNull: false
+    }
     });
-module.exports = service
-
-// {  
-//    "services":{
-//         "serviceType": "leaky faucet",
-//         "serviceDescription": "sink faucet wont stop running in the kitchen",
-//         "address": "123 Main St.",
-//         "picture": "water picture"
-//      }
-// }
+module.exports = Service
+/*
+ {  
+         "serviceType": "leaky faucet",
+         "serviceDescription": "sink faucet wont stop running in the kitchen",
+        "address": "123 Main St.",
+         "picture": "water picture"
+ }
+ */

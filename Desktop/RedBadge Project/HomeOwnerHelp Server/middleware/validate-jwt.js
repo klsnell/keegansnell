@@ -6,6 +6,7 @@ const validateSession = async(req, res, next) => {
     } else if (req.headers.authorization) {
         const {authorization} = req.headers;
         const payload = authorization ? jwt.verify(authorization, process.env.JWT_SECRET) : undefined; 
+      
         if(payload) {
             let foundUser = await UserModel.findOne({
                 where: { id: payload.id }

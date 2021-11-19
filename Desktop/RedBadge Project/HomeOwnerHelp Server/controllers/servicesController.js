@@ -5,6 +5,7 @@ const {ServicesModel} = require('../models');
 
 //create service request
 router.post('/create', validateSession, async (req, res) => {
+    console.log("REQUEST USER", req.user)
     const {serviceType, serviceDescription, address, picture} = req.body;
     const {id} = req.user;
     const serviceEntry ={
@@ -12,7 +13,7 @@ router.post('/create', validateSession, async (req, res) => {
         serviceDescription,
         address,
         picture,
-        owner_id: id
+        userId: id
     } 
     try{
         const newRequest = await ServicesModel.create(serviceEntry);
@@ -28,11 +29,12 @@ router.get("/mine", validateSession, async (req, res) => {
     try{
         const userRequest = await ServicesModel.findAll({
             where:{
-                owner_id: id
+                userId: id
             }
         });
         res.status(200).json(userRequest);
     }catch(err){
+        // console.log(err);
         res.status(500).json({error: err});
     }
 });
@@ -46,16 +48,42 @@ router.delete('/delete/:id', validateSession, async (req, res) => {
         const query = {
             where: {
                 id: serviceId,
-                owner_id: userId
+                userId: userId
             }
         }
         await ServicesModel.destroy(query)
-        res.status(200).json({ message: 'Item has successfully been deleted' })
+        res.status(200).json({ message: 'Service request has successfully been deleted' })
     } catch (err) {
         res.status(500).json({
             message: 'Failed to delete item'
         })
     }
-})
+});
+
+//Update service request by user
+router.put("/update/:Id", validateSession, async (req, res) => {
+    const {serviceType, serviceDescription, address, picture} = req.body;
+    const serviceId = req.params.id;
+    const userId = req.userId;
+    const query = {
+      where: {
+        serviceId,
+        userId
+      }
+    };
+    const updatedService = {
+        serviceType: serviceType,
+        serviceDescription: serviceDescription,
+        address: address,
+        picture: picture
+    }
+    try{
+      const update = await ServicesModel.update(updatedService, query);
+      res.status(200).json(update);
+    } catch (err) {
+        console.log(err);
+      res.status(500).json({ error: err});
+    }
+  });
 
 module.exports = router;

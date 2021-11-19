@@ -20,10 +20,14 @@ const User = db.define("user", {
         allowNull: false,
         unique: true,
     },
-    // address:{
-    //     type: DataTypes.STRING,
-    //     allowNull: true,
-    // }
+    id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false
+      }
+ 
+    
 });
 
 module.exports = User;

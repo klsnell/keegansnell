@@ -1,15 +1,16 @@
 require("dotenv").config();
 const router = require('express').Router();
-const { UserModel } = require('../models');
+const models = require('../models');
 const { UniqueConstraintError } = require('sequelize/lib/errors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const validateSession = require('../middleware/validate-jwt');
 
+//user register
 router.post('/register', async (req, res) => {
     let { email, password, fName, phoneNumber } = req.body.user;
     try {
-        const User = await UserModel.create({
+        const User = await models.UserModel.create({
             email,
             password: bcrypt.hashSync(password, 13),
             fName,
@@ -19,7 +20,7 @@ router.post('/register', async (req, res) => {
         res.status(201).json({
             message: "User successfully registered!",
             user: User,
-            SessionToken: token
+            SessionToken: `${token}`
         });
     } catch (err) {
         if (err instanceof UniqueConstraintError) {
@@ -45,13 +46,15 @@ router.post('/register', async (req, res) => {
 }
 */
 
+//user login
 router.post("/login", async (req, res) => {
     let { email, password } = req.body.user;
     try {
-        let loginUser = await UserModel.findOne({
+        let loginUser = await models.UserModel.findOne({
             where: {
                 email: email,
             },
+            
         });
         if (loginUser) {
             let passwordComparison = await bcrypt.compare(password, loginUser.password);
@@ -60,7 +63,7 @@ router.post("/login", async (req, res) => {
                 res.status(200).json({
                     user: loginUser,
                     message: "User successfully logged in",
-                    SessionToken: token
+                    SessionToken: `${token}`
                 });
             } else {
                 res.status(401).json({
@@ -73,6 +76,7 @@ router.post("/login", async (req, res) => {
             });
         }
     } catch (error) {
+        // console.log(error);
         res.status(500).json({
             message: "Failed to log user in"
         })
@@ -87,12 +91,14 @@ router.post("/login", async (req, res) => {
 }
 */
 
+
+//user update
 router.put('/updateemail', validateSession, async (req, res) => {
     const updateEmail = {
         email: req.body.user.email
     };
     const query = { where: { id: req.user.id } };
-    let updatedUser = await UserModel.update(updateEmail, query)
+    let updatedUser = await models.UserModel.update(updateEmail, query)
         .then((user) => res.status(200).json(user))
         .catch((err) => res.status(500).json({ error: err }));
 });
@@ -103,10 +109,41 @@ router.delete("/delete/:id", validateSession, async (req, res) => {  //:id is a 
                 id: req.params.id
             }
         };
-        const userDelete = await UserModel.destroy(query);
+        const userDelete = await models.UserModel.destroy(query);
         res.status(200).json({ message: "User Removed", userDelete });
     } catch (err) {
+        // console.log(err)
         res.status(500).json({ error: err });
     }
 });
+
+//get user
+router.get("/userinfo", validateSession, async(req, res) => {
+    try{
+        await models.UserModel.findAll({
+            include:[
+                {
+                    model: models.ServicesModel,
+                    include:[
+                        {
+                            model: models.ResponseModel
+                        }
+                    ]
+                }
+            ]
+        })
+        .then(
+            user => {
+                res.status(200).json({
+                    user:user
+                });
+            }
+        )
+    }catch (err){
+        res.status(500).json({
+            error: `Failed to retrieve users: ${err}`
+        })
+    }
+})
+
 module.exports = router;
