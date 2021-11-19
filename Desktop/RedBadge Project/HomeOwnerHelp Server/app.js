@@ -33,7 +33,10 @@ dbConnection.authenticate()
         "email": "test@test.com",
         "password": "test",
         "fName": "tester",
-        "phoneNumber": "555"
+        "phoneNumber": "555",
+        "isUser": true,
+        "isContractor": false,
+        "isAdmin": false
     }
 }
 
@@ -56,7 +59,7 @@ dbConnection.authenticate()
  }
 
 
-        /response/respond
+        /response/respond/:serviceId
   {  
          "company": "General Contracting",
          "reply": "water damage in hallway, drywall damaged",

@@ -8,13 +8,16 @@ const validateSession = require('../middleware/validate-jwt');
 
 //user register
 router.post('/register', async (req, res) => {
-    let { email, password, fName, phoneNumber } = req.body.user;
+    let { email, password, fName, phoneNumber, isUser,isContractor,isAdmin } = req.body.user;
     try {
         const User = await models.UserModel.create({
             email,
             password: bcrypt.hashSync(password, 13),
             fName,
-            phoneNumber
+            phoneNumber,
+            isUser,
+            isContractor,
+            isAdmin
         });
         let token = jwt.sign({ id: User.id }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 });
         res.status(201).json({
@@ -41,7 +44,10 @@ router.post('/register', async (req, res) => {
         "email": "test@test.com",
         "password": "test",
         "fName": "tester",
-        "phoneNumber": "555"
+        "phoneNumber": "555",
+        "isUser": true,
+        "isContractor": false,
+        "isAdmin": false
     }
 }
 */

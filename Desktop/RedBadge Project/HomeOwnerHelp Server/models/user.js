@@ -20,6 +20,18 @@ const User = db.define("user", {
         allowNull: false,
         unique: true,
     },
+    isUser:{
+        type: DataTypes.BOOLEAN,
+        allowNull: true
+    },
+    isContractor:{
+        type: DataTypes.BOOLEAN,
+        allowNull: true
+    },
+    isAdmin:{
+        type: DataTypes.BOOLEAN,
+        allowNull: true
+    },
     id: {
         type: DataTypes.UUID,
         primaryKey: true,
