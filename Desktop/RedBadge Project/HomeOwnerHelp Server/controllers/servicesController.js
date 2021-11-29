@@ -3,7 +3,7 @@ let router = express.Router();
 let validateSession = require('../middleware/validate-jwt');
 const {ServicesModel} = require('../models');
 
-//create service request
+//*create service request
 router.post('/create', validateSession, async (req, res) => {
     console.log("REQUEST USER", req.user)
     const {serviceType, serviceDescription, address, picture} = req.body;
@@ -23,7 +23,7 @@ router.post('/create', validateSession, async (req, res) => {
     }
 });
 
-//get request by user
+//*get request by user
 router.get("/mine", validateSession, async (req, res) => {
     let {id} = req.user;
     try{
@@ -39,7 +39,7 @@ router.get("/mine", validateSession, async (req, res) => {
     }
 });
 
-//User delete service request
+//*User delete service request
 
 router.delete('/delete/:id', validateSession, async (req, res) => {
     const userId = req.user.id;
@@ -67,7 +67,7 @@ router.put("/update/:Id", validateSession, async (req, res) => {
     const userId = req.userId;
     const query = {
       where: {
-        serviceId,
+        id: serviceId,
         userId
       }
     };

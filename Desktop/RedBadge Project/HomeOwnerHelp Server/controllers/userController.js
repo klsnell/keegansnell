@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const validateSession = require('../middleware/validate-jwt');
 
-//user register
+//*user register
 router.post('/register', async (req, res) => {
     let { email, password, fName, phoneNumber, isUser,isContractor,isAdmin } = req.body.user;
     try {
@@ -52,7 +52,7 @@ router.post('/register', async (req, res) => {
 }
 */
 
-//user login
+//*user login
 router.post("/login", async (req, res) => {
     let { email, password } = req.body.user;
     try {
@@ -98,7 +98,7 @@ router.post("/login", async (req, res) => {
 */
 
 
-//user update
+//*user update
 router.put('/updateemail', validateSession, async (req, res) => {
     const updateEmail = {
         email: req.body.user.email
@@ -123,7 +123,7 @@ router.delete("/delete/:id", validateSession, async (req, res) => {  //:id is a 
     }
 });
 
-//get user
+//*get user
 router.get("/userinfo", validateSession, async(req, res) => {
     try{
         await models.UserModel.findAll({

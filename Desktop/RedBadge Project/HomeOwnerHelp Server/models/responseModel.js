@@ -1,4 +1,4 @@
-const {DataTypes} = require("sequelize");
+const { DataTypes } = require("sequelize");
 const db = require("../db");
 
 const response = db.define("response", {
@@ -19,8 +19,8 @@ const response = db.define("response", {
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false
-      },
-      userId: {
+    },
+    userId: {
         type: DataTypes.UUID,
         allowNull: false
     },

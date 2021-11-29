@@ -64,29 +64,31 @@ router.delete('/deleteresponse/:id', validateSession, async(req, res) => {
     const query ={
       where:{
         id: responseId,
-        owner_id: userId
+        // userId: id
       }
     }
     await ServicesModel.destroy(query)
     res.status(200).json({message: "Response has successfully been deleted"})
   }catch(err){
+    console.log(err)
     res.status(500).json({
       message: "Failed to delete response"
     })
   }
 });
 
-//!get responses by contractor
+//*get responses by contractor
 router.get("/myresponses", validateSession, async(req, res) => {
   let {id} = req.user;
   try{
     const contractorRequest = await ResponseModel.findAll({
       where: {
-        owner_id: id
+        userId: id
       }
     });
     res.status(200).json(contractorRequest);
   }catch(err){
+    console.log(err)
     res.status(500).json({error: err});
   }
 });
