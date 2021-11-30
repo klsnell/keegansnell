@@ -31,15 +31,15 @@ router.post('/respond/:serviceId', validateSession, async (req, res) => {
  }
 */
 
-//!update response
-router.put("/updateresponse/:entryId", validateSession, async (req, res) => {
+//*update response
+router.put("/updateresponse/:id", validateSession, async (req, res) => {
   const { company, reply, estimateTime } = req.body;
-  const serviceId = req.params.entryId;
+  const serviceId = req.params.id;
   const userId = req.user.id;
   const query = {
     where: {
       id: serviceId,
-      owner_id: userId
+      userId: userId
     }
   };
   const updatedResponse = {
