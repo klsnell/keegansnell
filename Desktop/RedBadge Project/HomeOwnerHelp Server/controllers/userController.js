@@ -8,7 +8,7 @@ const validateSession = require('../middleware/validate-jwt');
 
 //*user register
 router.post('/register', async (req, res) => {
-    let { email, password, fName, phoneNumber, isUser,isContractor,isAdmin } = req.body.user;
+    let { email, password, fName, phoneNumber, isUser, isContractor, isAdmin } = req.body.user;
     try {
         const User = await models.UserModel.create({
             email,
@@ -60,7 +60,7 @@ router.post("/login", async (req, res) => {
             where: {
                 email: email,
             },
-            
+
         });
         if (loginUser) {
             let passwordComparison = await bcrypt.compare(password, loginUser.password);
@@ -108,6 +108,9 @@ router.put('/updateemail', validateSession, async (req, res) => {
         .then((user) => res.status(200).json(user))
         .catch((err) => res.status(500).json({ error: err }));
 });
+
+
+
 router.delete("/delete/:id", validateSession, async (req, res) => {  //:id is a parameter
     try {
         const query = {
@@ -124,13 +127,13 @@ router.delete("/delete/:id", validateSession, async (req, res) => {  //:id is a 
 });
 
 //*get user
-router.get("/userinfo", validateSession, async(req, res) => {
-    try{
+router.get("/userinfo", validateSession, async (req, res) => {
+    try {
         await models.UserModel.findAll({
-            include:[
+            include: [
                 {
                     model: models.ServicesModel,
-                    include:[
+                    include: [
                         {
                             model: models.ResponseModel
                         }
@@ -138,14 +141,14 @@ router.get("/userinfo", validateSession, async(req, res) => {
                 }
             ]
         })
-        .then(
-            user => {
-                res.status(200).json({
-                    user:user
-                });
-            }
-        )
-    }catch (err){
+            .then(
+                user => {
+                    res.status(200).json({
+                        user: user
+                    });
+                }
+            )
+    } catch (err) {
         res.status(500).json({
             error: `Failed to retrieve users: ${err}`
         })

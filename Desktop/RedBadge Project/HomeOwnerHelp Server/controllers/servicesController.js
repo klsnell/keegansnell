@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 let validateSession = require('../middleware/validate-jwt');
 const {ServicesModel} = require('../models');
+const Service = require('../models/services');
 
 //*create service request
 router.post('/create', validateSession, async (req, res) => {
@@ -61,14 +62,30 @@ router.delete('/delete/:id', validateSession, async (req, res) => {
 });
 
 //Update service request by user
-router.put("/update/:Id", validateSession, async (req, res) => {
+
+// router.put("/update/:id", validateSession, async(req, res) => {
+//     const updateService = {
+//         serviceType: serviceType,
+//         serviceDescription: serviceDescription,
+//         address: address,
+//         picture: picture
+//     }
+//     const query = { where: {id: req.params.id} };
+//     let updateService = await models.ServicesModel.update(updateService, query)
+//     .then((service) => res.status(200).json(service))
+//     console.log(err)
+//     .catch((err) => res.status(500).json({error: err}))
+// })
+
+
+router.put("/update/:id", validateSession, async (req, res) => {
     const {serviceType, serviceDescription, address, picture} = req.body;
-    const serviceId = req.params.id;
-    const userId = req.userId;
+    const userId = req.user.id;
+    const serviceId = req.params.id
     const query = {
       where: {
         id: serviceId,
-        userId
+        userId: userId
       }
     };
     const updatedService = {
@@ -85,5 +102,6 @@ router.put("/update/:Id", validateSession, async (req, res) => {
       res.status(500).json({ error: err});
     }
   });
+  
 
 module.exports = router;
