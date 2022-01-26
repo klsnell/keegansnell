@@ -1,9 +1,10 @@
 {
   "files": {
-    "main.css": "/keegansnell/static/css/main.bad396dd.css",
-    "main.js": "/keegansnell/static/js/main.abfd59bf.js",
+    "main.css": "/keegansnell/static/css/main.7048eb9d.css",
+    "main.js": "/keegansnell/static/js/main.8cf557af.js",
     "static/js/787.c0604e28.chunk.js": "/keegansnell/static/js/787.c0604e28.chunk.js",
     "static/media/HoH.PNG": "/keegansnell/static/media/HoH.77754e002bde12b8d872.PNG",
+    "static/media/Garfields.PNG": "/keegansnell/static/media/Garfields.e8c2757c3d70e6474113.PNG",
     "static/media/wife.jpg": "/keegansnell/static/media/wife.72cd8f258db676343adf.jpg",
     "static/media/giphyAPI.PNG": "/keegansnell/static/media/giphyAPI.73d4763b818f2b26f4fa.PNG",
     "static/media/staticlayout.PNG": "/keegansnell/static/media/staticlayout.c83e5a72a0258fa41685.PNG",
@@ -11,12 +12,12 @@
     "static/media/nyt api.PNG": "/keegansnell/static/media/nyt api.64597f09f83fdccc743e.PNG",
     "static/media/csscreation.PNG": "/keegansnell/static/media/csscreation.964e29b309cc703dc574.PNG",
     "index.html": "/keegansnell/index.html",
-    "main.bad396dd.css.map": "/keegansnell/static/css/main.bad396dd.css.map",
-    "main.abfd59bf.js.map": "/keegansnell/static/js/main.abfd59bf.js.map",
+    "main.7048eb9d.css.map": "/keegansnell/static/css/main.7048eb9d.css.map",
+    "main.8cf557af.js.map": "/keegansnell/static/js/main.8cf557af.js.map",
     "787.c0604e28.chunk.js.map": "/keegansnell/static/js/787.c0604e28.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.bad396dd.css",
-    "static/js/main.abfd59bf.js"
+    "static/css/main.7048eb9d.css",
+    "static/js/main.8cf557af.js"
   ]
 }
